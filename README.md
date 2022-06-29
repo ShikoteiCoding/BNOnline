@@ -1,6 +1,9 @@
 # BNOnline
 
 # TODO
+- Find front technologies
+- API to communicate server / front
+- Dockerize
 
 # Install
 For now, we use a virtual env not contained. It's simply in the root of the folder and ignored in gitignore.
