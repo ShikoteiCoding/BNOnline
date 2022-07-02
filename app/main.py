@@ -4,6 +4,7 @@ from pgmpy.factors.discrete import TabularCPD
 from fastapi import FastAPI, Request
 
 from dblayer import get_network_names
+from parser import parse_name, parse_structure
 
 app = FastAPI()
 
@@ -32,35 +33,18 @@ async def network_save(payload: Request):
     req = await payload.json()
     body = req["body"]
 
-    name = body["name"]
-    if name in get_network_names():
-        print(f"Network {name} already exist")
-        # TODO: create BN, compare or overwrite
-    return {"message": "NotImplementedError"}
+    print(body)
 
-    
+    bayesian_network = body["bayesian_network"]
+    name = bayesian_network["name"]
 
+    #if name in get_network_names(): print(f"Network {name} already exist")
 
-
-
-
-## Defining Bayesian Structure
-#model = BayesianNetwork([('Guest', 'Host'), ('Price', 'Host#
-## Defining the CPDs:
-#cpd_guest = TabularCPD('Guest', 3, [[0.33], [0.33], [0.33]])
-#cpd_price = TabularCPD('Price', 3, [[0.33], [0.33], [0.33]])
-#cpd_host = TabularCPD(
-#    'Host', 
-#    3, 
-#    [
-#        [0, 0, 0, 0, 0.5, 1, 0, 1, 0.5],
-#        [0.5, 0, 1, 0, 0, 0, 1, 0, 0.5],
-#        [0.5, 1, 0, 1, 0.5, 0, 0, 0, 0]
-#    ],
-#    evidence=['Guest', 'Price'], evidence_card=[3, 3]
-#)
-#
-## Associating the CPDs with the network structure.
-#model.add_cpds(cpd_guest, cpd_price, cpd_host)
-#
-#print(f"Model is valid: {model.check_model()}")
+    structure = parse_structure(bayesian_network)
+    bn = BayesianNetwork(structure)
+    bn.name = name
+    try:
+        bn.check_model()
+    except Exception as err:
+        return {"message": str(err)}
+    return {"message": "BN Created"}

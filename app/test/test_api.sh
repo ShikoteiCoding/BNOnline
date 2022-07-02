@@ -6,12 +6,30 @@ post() {
     curl -d @- -X POST http://localhost:8000/api/v1/network/save
 }
 
-# TC1: Valid "Device certificate is valid but has changed" msg
-tc1() {
+# TC0: Test post function
+tc0() {
     cat << ++ | post
         {
             "body": {
                 "name": "Test Post"
+            }
+        }
+++
+}
+
+## Messages for json serialisation
+# TC1: 
+tc1() {
+    cat << ++ | post
+        {
+            "body": {
+                "bayesian_network": {
+                    "name": "Test Post",
+                    "structure": [
+                        ["Guest", "Host"],
+                        ["Price", "Host"]
+                    ]
+                }
             }
         }
 ++
