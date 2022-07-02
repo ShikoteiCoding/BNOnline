@@ -1,7 +1,7 @@
 from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
 
-from dblayer import save_network, read_network, get_network_names
+from dblayer import save_network, read_network, get_network_names, SERIALIZER
 
 def test_write():
     # Defining Bayesian Structure
@@ -24,11 +24,12 @@ def test_write():
     # Associating the CPDs with the network structure.
     model.add_cpds(cpd_guest, cpd_price, cpd_host)
 
-    save_network(model, 'first_model.bif', 'BIF')
+    for key in SERIALIZER.keys():
+        save_network(model, key)
 
 def test_files():
     print(get_network_names())
 
 
 if __name__ == "__main__":
-    test_files()
+    test_write()

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<BIF VERSION="0.3">
+  <NETWORK>
+    <NAME>Test Network</NAME>
+    <VARIABLE TYPE="nature">
+      <NAME>Guest</NAME>
+      <OUTCOME>0</OUTCOME>
+      <OUTCOME>1</OUTCOME>
+      <OUTCOME>2</OUTCOME>
+      <PROPERTY />
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+      <NAME>Host</NAME>
+      <OUTCOME>0</OUTCOME>
+      <OUTCOME>1</OUTCOME>
+      <OUTCOME>2</OUTCOME>
+      <PROPERTY />
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+      <NAME>Price</NAME>
+      <OUTCOME>0</OUTCOME>
+      <OUTCOME>1</OUTCOME>
+      <OUTCOME>2</OUTCOME>
+      <PROPERTY />
+    </VARIABLE>
+    <DEFINITION>
+      <FOR>Guest</FOR>
+      <TABLE>0.33 0.33 0.33 </TABLE>
+    </DEFINITION>
+    <DEFINITION>
+      <FOR>Host</FOR>
+      <GIVEN>Guest</GIVEN>
+      <GIVEN>Price</GIVEN>
+      <TABLE>0.0 0.5 0.5 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.0 1.0 0.5 0.0 0.5 1.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 0.5 0.5 0.0 </TABLE>
+    </DEFINITION>
+    <DEFINITION>
+      <FOR>Price</FOR>
+      <TABLE>0.33 0.33 0.33 </TABLE>
+    </DEFINITION>
+  </NETWORK>
+</BIF>
