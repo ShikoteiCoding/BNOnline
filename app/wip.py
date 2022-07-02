@@ -1,9 +1,12 @@
 from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
 
-if __name__ == "__main__":
+from dblayer import save_network, read_network, get_network_names
+
+def test_write():
     # Defining Bayesian Structure
     model = BayesianNetwork([('Guest', 'Host'), ('Price', 'Host')])
+    model.name = "Test Network"
     # Defining the CPDs:
     cpd_guest = TabularCPD('Guest', 3, [[0.33], [0.33], [0.33]])
     cpd_price = TabularCPD('Price', 3, [[0.33], [0.33], [0.33]])
@@ -21,5 +24,11 @@ if __name__ == "__main__":
     # Associating the CPDs with the network structure.
     model.add_cpds(cpd_guest, cpd_price, cpd_host)
 
-    print(f"Model is valid: {model.check_model()}")
-    print(model.graph_attr_dict_factory.__dict__)
+    save_network(model, 'first_model.bif', 'BIF')
+
+def test_files():
+    print(get_network_names())
+
+
+if __name__ == "__main__":
+    test_files()

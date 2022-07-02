@@ -2,6 +2,8 @@ from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
 from fastapi import FastAPI
 
+from dblayer import get_network_names
+
 app = FastAPI()
 
 bn = BayesianNetwork()
@@ -23,15 +25,20 @@ async def network_read():
     """ Get a bayesian network. """
     return {"message": bn}
 
-@app.post("/api/v1/network")
-async def network_create(bn_config: dict):
-    """ Create a bayesian network. """
-    print(bn_config)
-
 @app.post("/api/v1/network/save")
-async def network_save(bn_config: dict):
+async def network_save(config: dict):
     """ Save a bayesian network. """
-    print(bn_config)
+
+    name = config["name"]
+    if name in get_network_names():
+        print(f"Network {name} already exist")
+        # TODO: create BN, compare or overwrite
+        raise NotImplementedError()
+
+    
+
+
+
 
 
 ## Defining Bayesian Structure
