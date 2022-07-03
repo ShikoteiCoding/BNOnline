@@ -4,7 +4,7 @@ from pgmpy.factors.discrete import TabularCPD
 from fastapi import FastAPI, Request
 
 from dblayer import get_network_names
-from parser import parse_name, parse_structure
+from parser import parse_name, parse_structure, create_network_from_dict
 
 app = FastAPI()
 
@@ -31,19 +31,10 @@ async def network_read():
 async def network_save(payload: Request):
     """ Save a bayesian network. """
     req = await payload.json()
-    body = req["body"]
 
-    print(body)
-
-    bayesian_network = body["bayesian_network"]
-    name = bayesian_network["name"]
-
-    #if name in get_network_names(): print(f"Network {name} already exist")
-
-    structure = parse_structure(bayesian_network)
-    bn = BayesianNetwork(structure)
-    bn.name = name
+    network_config = req["body"]["bayesian_network"]
     try:
+        bn = create_network_from_dict(network_config)
         bn.check_model()
     except Exception as err:
         return {"message": str(err)}
