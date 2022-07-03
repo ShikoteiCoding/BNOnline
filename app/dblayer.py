@@ -12,11 +12,6 @@ SERIALIZER = {
         'writer': BIFWriter,
         'ext': '.bif'
     },
-    'UAI': {
-        'reader': UAIReader,
-        'writer': UAIWriter,
-        'ext': '.uai'
-    },
     'XMLBIF': {
         'reader': XMLBIFReader,
         'writer': XMLBIFWriter,
@@ -33,7 +28,7 @@ def get_network_names() -> list[str]:
     return [extract_file_name(f) for f in listdir(DATABASE_PATH) if isfile(join(DATABASE_PATH, f))]
 
 def save_network(model: BayesianNetwork, serializer: str = 'BIF') -> None:
-    """ Save a given network the 'database' """
+    """ Save a given network from the 'database' """
 
     if not serializer in SERIALIZER.keys(): raise KeyError(f"Your key {serializer} does not exist.")
 
@@ -45,7 +40,15 @@ def save_network(model: BayesianNetwork, serializer: str = 'BIF') -> None:
     with open(DATABASE_PATH + filename + extension, "w") as f:
         f.write(serialization)
 
-def read_network(name: str, serializer: str) -> str:
-    """ Save a given network the 'database' """
+def read_network(name: str, serializer: str = 'BIF') -> BayesianNetwork:
+    """ Read a given network from the 'database' """
 
-    return ""
+    if not serializer in SERIALIZER.keys(): raise KeyError(f"Your key {serializer} does not exist.")
+
+
+    reader = SERIALIZER[serializer]["reader"]
+    extension = SERIALIZER[serializer]["ext"]
+
+    print(DATABASE_PATH + name + extension)
+
+    return reader(DATABASE_PATH + name + extension).get_model()

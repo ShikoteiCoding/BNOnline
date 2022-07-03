@@ -6,7 +6,7 @@ from dblayer import save_network, read_network, get_network_names, SERIALIZER
 def create_bn() -> BayesianNetwork:
     # Defining Bayesian Structure
     model = BayesianNetwork([('Guest', 'Host'), ('Price', 'Host')])
-    model.name = "Test Network"
+    model.name = "Test-Network"
     # Defining the CPDs:
     cpd_guest = TabularCPD('Guest', 3, [[0.33], [0.33], [0.33]])
     cpd_price = TabularCPD('Price', 3, [[0.33], [0.33], [0.33]])
@@ -33,13 +33,18 @@ def test_write():
     for key in SERIALIZER.keys():
         save_network(model, key)
 
+def test_read():
+    name = "Test-Network"
+
+    for key in SERIALIZER.keys():
+        print(read_network(name, key))
+
 def test_files():
     print(get_network_names())
 
 def test_serialize():
-    model = create_bn()
-    print(model)
+    test_write()
 
 
 if __name__ == "__main__":
-    test_serialize()
+    test_read()
