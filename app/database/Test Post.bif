@@ -1,0 +1,29 @@
+network Test Post {
+}
+variable Guest {
+    type discrete [ 3 ] { 0, 1, 2 };
+}
+variable Host {
+    type discrete [ 3 ] { 0, 1, 2 };
+}
+variable Price {
+    type discrete [ 3 ] { 0, 1, 2 };
+}
+probability ( Guest ) {
+    table 0.33, 0.33, 0.33 ;
+}
+probability ( Host | Guest, Price ) {
+    ( 0, 0 ) 0.0, 0.5, 0.5;
+    ( 0, 1 ) 0.0, 0.0, 1.0;
+    ( 0, 2 ) 0.0, 1.0, 0.0;
+    ( 1, 0 ) 0.0, 0.0, 1.0;
+    ( 1, 1 ) 0.5, 0.0, 0.5;
+    ( 1, 2 ) 1.0, 0.0, 0.0;
+    ( 2, 0 ) 0.0, 1.0, 0.0;
+    ( 2, 1 ) 1.0, 0.0, 0.0;
+    ( 2, 2 ) 0.5, 0.5, 0.0;
+
+}
+probability ( Price ) {
+    table 0.33, 0.33, 0.33 ;
+}

@@ -15,10 +15,6 @@ def create_network_from_dict(config: dict) -> BayesianNetwork:
 
     return bn
 
-
-
-
-
 def parse_name(config: dict) -> str | None:
     return config.get("name")
 
@@ -27,3 +23,11 @@ def parse_structure(config: dict) -> str | None:
 
 def parse_cpds(config: dict) -> list[list[Any]]:
     return config.get("cpds") or []
+
+def valid_request(config: dict) -> bool:
+    if (
+        not config.get("body") or
+        not config["body"].get("bayesian_network")
+    ): return False
+
+    return True

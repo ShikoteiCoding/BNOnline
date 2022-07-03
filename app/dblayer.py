@@ -32,7 +32,7 @@ def get_network_names() -> list[str]:
     """ Return the existing network names. """
     return [extract_file_name(f) for f in listdir(DATABASE_PATH) if isfile(join(DATABASE_PATH, f))]
 
-def save_network(model: BayesianNetwork, serializer: str) -> None:
+def save_network(model: BayesianNetwork, serializer: str = 'BIF') -> None:
     """ Save a given network the 'database' """
 
     if not serializer in SERIALIZER.keys(): raise KeyError(f"Your key {serializer} does not exist.")
