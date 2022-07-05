@@ -2,7 +2,11 @@ send() {
     curl -d @- localhost:8000
 }
 
-post() {
+get_network_all() {
+	curl -X GET http://localhost:8000/api/v1/network/all
+}
+
+post_network_save() {
     curl -d @- -X POST http://localhost:8000/api/v1/network/save
 }
 
@@ -17,14 +21,23 @@ tc0() {
 ++
 }
 
+## Messages to get information
+get_network_names() {
+	cat << ++ | get_network_all
+	{
+		"body": "hi"
+	}
+++
+}
+
 ## Messages for json serialisation
-# TC1: 
-tc1() {
-    cat << ++ | post
+# Post a Valid Network: 
+save_network() {
+    cat << ++ | post_network_save
 {
 	"body": {
 		"bayesian_network": {
-			"name": "Test Post",
+			"name": "Test-Post",
 			"structure": [
 				["Guest", "Host"],
 				["Price", "Host"]

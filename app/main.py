@@ -22,10 +22,10 @@ def close_pool():
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/api/v1/network")
+@app.get("/api/v1/network/all")
 async def network_read():
     """ Get a bayesian network. """
-    return {"message": "NotImplementedError"}
+    return {"message": get_network_names()}
 
 @app.post("/api/v1/network/save")
 async def network_save(payload: Request):
